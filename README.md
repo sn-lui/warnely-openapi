@@ -68,6 +68,21 @@ curl -s "https://raw.githubusercontent.com/sn-lui/warnely-openapi/main/postman-c
 - `/api/v1` is a stability commitment. Breaking changes ship only behind `/api/v2`.
 - Field additions to existing endpoints are non-breaking and do not bump the version.
 
+## Client SDKs
+
+Zero-dependency, hand-written client libraries living in this repo:
+
+- **Python** [`clients/python/`](./clients/python/) — Python 3.8+, stdlib-only.
+  ```bash
+  pip install "git+https://github.com/sn-lui/warnely-openapi.git#subdirectory=clients/python"
+  ```
+- **TypeScript / JavaScript** [`clients/typescript/`](./clients/typescript/) — Node 18+, browsers, Deno, Bun.
+  ```bash
+  npm install "github:sn-lui/warnely-openapi#v1.0.0&path:/clients/typescript"
+  ```
+
+Both clients wrap the same four endpoints, raise typed errors, and ship with full README + reference docs.
+
 ## Companion data
 
 - **CSV + JSON dataset bundle** on [Hugging Face: Warnely/country-risk](https://huggingface.co/datasets/Warnely/country-risk)

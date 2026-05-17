@@ -1,0 +1,51 @@
+{
+  "name": "warnely",
+  "version": "1.0.0",
+  "description": "TypeScript client for the Warnely Public API: composite travel-safety scores for 180 countries.",
+  "keywords": [
+    "warnely",
+    "travel-safety",
+    "country-risk",
+    "fcdo",
+    "state-department",
+    "global-peace-index",
+    "travel-advisory",
+    "api-client",
+    "typescript",
+    "openapi"
+  ],
+  "homepage": "https://warnely.com/developers",
+  "bugs": "https://github.com/sn-lui/warnely-openapi/issues",
+  "license": "CC-BY-4.0",
+  "author": "Warnely <hello@warnely.com>",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sn-lui/warnely-openapi.git",
+    "directory": "clients/typescript"
+  }
+}

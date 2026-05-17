@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "warnely"
+version = "1.0.0"
+description = "Python client for the Warnely Public API: composite travel-safety scores for 180 countries."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "CC-BY-4.0" }
+authors = [
+    { name = "Warnely", email = "hello@warnely.com" },
+]
+keywords = [
+    "warnely",
+    "travel-safety",
+    "country-risk",
+    "fcdo",
+    "state-department",
+    "global-peace-index",
+    "travel-advisory",
+    "api-client",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Creative Commons Attribution 4.0 International (CC BY 4.0)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://warnely.com/developers"
+Documentation = "https://warnely.com/api-docs"
+Repository = "https://github.com/sn-lui/warnely-openapi"
+"Bug Tracker" = "https://github.com/sn-lui/warnely-openapi/issues"
+"OpenAPI Spec" = "https://warnely.com/openapi.json"
