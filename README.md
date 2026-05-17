@@ -7,6 +7,17 @@ Machine-readable specification for the [Warnely Public API](https://warnely.com/
 
 The canonical spec is served at **[https://warnely.com/openapi.json](https://warnely.com/openapi.json)** — that is the URL to use for production tooling. This repository mirrors the spec for GitHub-based discovery, version pinning, and OpenAPI directory submissions.
 
+## Where to read the spec
+
+| Surface | URL | Use |
+|---|---|---|
+| Interactive docs (canonical) | https://warnely.com/api-docs | Try every endpoint live in the browser |
+| Raw OpenAPI 3.1 JSON | https://warnely.com/openapi.json | Production tooling, codegen, Postman import |
+| GitHub Pages mirror | https://sn-lui.github.io/warnely-openapi/ | Swagger UI served from this repo |
+| jsdelivr CDN (versioned) | https://cdn.jsdelivr.net/gh/sn-lui/warnely-openapi@v1.0.0/openapi.json | Version-pinned spec for CI builds |
+| jsdelivr CDN (latest) | https://cdn.jsdelivr.net/gh/sn-lui/warnely-openapi@main/openapi.json | Always-fresh spec |
+| Postman collection | [postman-collection.json](./postman-collection.json) | One-click Postman import |
+
 ## What the API exposes
 
 | Endpoint | Returns |
