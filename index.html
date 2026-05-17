@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warnely API Documentation (Swagger UI)</title>
+  <meta name="description" content="Interactive OpenAPI 3.1 documentation for the Warnely public travel-safety API. 180 countries, free, CORS-open, CC BY 4.0.">
+  <link rel="canonical" href="https://warnely.com/api-docs">
+  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://warnely.com/api-docs">
+  <meta property="og:title" content="Warnely API Documentation">
+  <meta property="og:description" content="OpenAPI 3.1 docs for the Warnely travel-safety REST API. 180 countries, free, CC BY 4.0.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.18.2/swagger-ui.css">
+  <style>
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#fafafa}
+    .banner{background:#1a1918;color:#fff;padding:14px 24px;font-size:14px;text-align:center}
+    .banner a{color:#F5A623;font-weight:600;text-decoration:none}
+    .banner a:hover{text-decoration:underline}
+    #swagger-ui{max-width:1180px;margin:0 auto}
+  </style>
+</head>
+<body>
+  <div class="banner">
+    Canonical interactive docs: <a href="https://warnely.com/api-docs">warnely.com/api-docs</a> · Spec source: <a href="https://github.com/sn-lui/warnely-openapi">github.com/sn-lui/warnely-openapi</a> · Live API: <a href="https://warnely.com/developers">warnely.com/developers</a>
+  </div>
+  <div id="swagger-ui"></div>
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.18.2/swagger-ui-bundle.js" crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.18.2/swagger-ui-standalone-preset.js" crossorigin></script>
+  <script>
+    window.addEventListener('load', function() {
+      window.ui = SwaggerUIBundle({
+        url: 'https://warnely.com/openapi.json',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        layout: 'BaseLayout',
+        tryItOutEnabled: true,
+        docExpansion: 'list',
+      });
+    });
+  </script>
+</body>
+</html>
