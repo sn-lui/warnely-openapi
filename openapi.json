@@ -1,0 +1,390 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Warnely Public API",
+    "summary": "Free, CORS-open, read-only REST API for the Warnely travel-safety dataset.",
+    "description": "Warnely publishes a composite country-risk score for 180 countries, derived from UK FCDO advisories, US State Department advisories, the Global Peace Index, the World Bank Worldwide Governance Indicators, WHO country health profiles, and a live news-incident wire (Reuters, BBC, AP, AFP, USGS, GDACS, ReliefWeb).\n\nThe public API exposes a stable subset of that dataset under `/v1`. CORS is open (`*`), authentication is not required, and the contract is versioned via the URL path — breaking changes ship behind `/v2`.\n\nUse cases:\n  - Embed country safety scores in travel apps, blogs, or notebooks.\n  - Compare countries side-by-side from a serverless function.\n  - Pipe the live incident wire into operations dashboards.\n\nLicence: CC BY 4.0 with attribution to Warnely.",
+    "version": "1.0.0",
+    "termsOfService": "https://warnely.com/terms",
+    "contact": {
+      "name": "Warnely",
+      "email": "hello@warnely.com",
+      "url": "https://warnely.com/developers"
+    },
+    "license": {
+      "name": "Creative Commons Attribution 4.0 International (CC BY 4.0)",
+      "identifier": "CC-BY-4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "x-logo": {
+      "url": "https://warnely.com/assets/icon-512.png",
+      "altText": "Warnely logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://warnely.com/api/v1",
+      "description": "Production"
+    }
+  ],
+  "externalDocs": {
+    "description": "Developer documentation",
+    "url": "https://warnely.com/developers"
+  },
+  "tags": [
+    {
+      "name": "Countries",
+      "description": "Per-country risk scores, advisories, and safety metadata."
+    },
+    {
+      "name": "Methodology",
+      "description": "Composite formula, weights, sources, and tier boundaries."
+    },
+    {
+      "name": "Incidents",
+      "description": "Recent items from the Warnely safety incident wire."
+    }
+  ],
+  "paths": {
+    "/countries": {
+      "get": {
+        "tags": ["Countries"],
+        "summary": "List all 180 countries",
+        "description": "Returns a compact list of every country in the Warnely dataset with risk score, tier, region, and flag. Optionally filter by region.",
+        "operationId": "listCountries",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "description": "Filter countries by region. Case-insensitive.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["Europe", "Asia", "Middle East", "Africa", "Latin America", "North America", "Oceania"]
+            },
+            "example": "Asia"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of countries (alphabetical by name).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["count", "countries", "licence", "attribution"],
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "description": "Number of countries returned.",
+                      "example": 180
+                    },
+                    "methodology": {
+                      "type": "string",
+                      "format": "uri",
+                      "example": "https://warnely.com/guides/methodology"
+                    },
+                    "licence": {
+                      "type": "string",
+                      "example": "CC BY 4.0"
+                    },
+                    "attribution": {
+                      "type": "string",
+                      "example": "Warnely"
+                    },
+                    "countries": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/CountryCompact" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries/{iso}": {
+      "get": {
+        "tags": ["Countries"],
+        "summary": "Get full snapshot for one country",
+        "description": "Returns the full Warnely country record: composite score with component breakdown, government advisories, drug-law tier, LGBTQ+ legal and social status, women's-safety rating, Global Peace Index rank, and quick facts.",
+        "operationId": "getCountryByIso",
+        "parameters": [
+          {
+            "name": "iso",
+            "in": "path",
+            "description": "ISO 3166-1 alpha-2 country code (uppercase, two letters).",
+            "required": true,
+            "schema": { "type": "string", "pattern": "^[A-Z]{2}$" },
+            "example": "TH"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full country snapshot.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["country", "licence", "attribution"],
+                  "properties": {
+                    "methodology": { "type": "string", "format": "uri" },
+                    "licence": { "type": "string", "example": "CC BY 4.0" },
+                    "attribution": { "type": "string", "example": "Warnely" },
+                    "country": { "$ref": "#/components/schemas/CountryFull" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ISO format.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          },
+          "404": {
+            "description": "Country not found in the Warnely dataset.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ApiError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/methodology": {
+      "get": {
+        "tags": ["Methodology"],
+        "summary": "Composite formula and sources",
+        "description": "Returns the full Warnely methodology: composite formula, component weights, source list, tier boundaries, and review cadence.",
+        "operationId": "getMethodology",
+        "responses": {
+          "200": {
+            "description": "Methodology document.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Methodology" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidents/recent": {
+      "get": {
+        "tags": ["Incidents"],
+        "summary": "List recent incidents from the Warnely wire",
+        "description": "Returns the most recent items from the live safety-incident wire. Sources include Reuters, BBC, AP, AFP, USGS, GDACS, ReliefWeb, Met Office, EA Floods, and several regional news feeds. Each incident is classified by a GPT-4o-mini pipeline.",
+        "operationId": "listRecentIncidents",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of incidents to return.",
+            "required": false,
+            "schema": { "type": "integer", "minimum": 1, "maximum": 200, "default": 50 }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "description": "Filter by country (ISO 3166-1 alpha-2 code).",
+            "required": false,
+            "schema": { "type": "string", "pattern": "^[A-Z]{2}$" },
+            "example": "TH"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of recent incidents (newest first).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "incidents": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Incident" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CountryCompact": {
+        "type": "object",
+        "required": ["iso2", "name"],
+        "properties": {
+          "iso2": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "description": "ISO 3166-1 alpha-2 code.",
+            "example": "TH"
+          },
+          "iso3": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "description": "ISO 3166-1 alpha-3 code.",
+            "example": "THA"
+          },
+          "name": {
+            "type": "string",
+            "description": "Country name (common English form).",
+            "example": "Thailand"
+          },
+          "region": {
+            "type": "string",
+            "enum": ["Europe", "Asia", "Middle East", "Africa", "Latin America", "North America", "Oceania"],
+            "example": "Asia"
+          },
+          "risk_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Warnely composite risk score (0 = very safe, 100 = do not travel).",
+            "example": 38
+          },
+          "risk_tier": {
+            "type": "string",
+            "enum": ["Very Safe", "Exercise Normal Caution", "Exercise Increased Caution", "High Risk", "Do Not Travel"],
+            "example": "Exercise Increased Caution"
+          },
+          "flag": {
+            "type": "string",
+            "description": "Unicode flag emoji.",
+            "example": "🇹🇭"
+          }
+        }
+      },
+      "CountryFull": {
+        "allOf": [
+          { "$ref": "#/components/schemas/CountryCompact" },
+          {
+            "type": "object",
+            "properties": {
+              "summary": {
+                "type": "string",
+                "description": "Short editorial summary of the country's safety profile."
+              },
+              "breakdown": {
+                "type": "object",
+                "description": "Per-category 1–5 breakdown: crime, terrorism, natural disasters, health, civil unrest, infrastructure."
+              },
+              "advisories": {
+                "type": "object",
+                "description": "UK FCDO and US State Department advisory details (level + alert text)."
+              },
+              "drug_law": {
+                "type": "object",
+                "description": "Drug-law tier (death penalty / severe / strict / moderate / decriminalised / cannabis legal)."
+              },
+              "lgbtq": {
+                "type": "object",
+                "description": "LGBTQ+ legal status (criminalised / legal / same-sex marriage) and social-acceptance band."
+              },
+              "womens_safety": {
+                "type": "object",
+                "description": "Women's-safety rating + notes (very safe / safe / caution / higher risk / extreme caution)."
+              },
+              "peace_index": {
+                "type": "object",
+                "description": "Global Peace Index 2025 rank and score."
+              },
+              "quick_facts": {
+                "type": "object",
+                "description": "Tap water, currency, voltage, plug type, calling code, time zone."
+              }
+            }
+          }
+        ]
+      },
+      "Methodology": {
+        "type": "object",
+        "required": ["composite", "components", "tiers", "sources", "licence"],
+        "properties": {
+          "composite": {
+            "type": "object",
+            "properties": {
+              "formula": {
+                "type": "string",
+                "example": "0.50 * editorial + 0.30 * authority + 0.15 * structural + 0.05 * live"
+              },
+              "renormalised_when_missing": { "type": "boolean" },
+              "scale": { "type": "string", "example": "0-100 (lower is safer)" }
+            }
+          },
+          "components": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "weight": { "type": "number" },
+                "description": { "type": "string" }
+              }
+            }
+          },
+          "tiers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "range": { "type": "string" },
+                "label": { "type": "string" },
+                "level": { "type": "integer" }
+              }
+            }
+          },
+          "sources": { "type": "array", "items": { "type": "string" } },
+          "review_cadence": { "type": "object", "additionalProperties": { "type": "string" } },
+          "licence": { "type": "string" },
+          "attribution": { "type": "string" },
+          "docs": { "type": "string", "format": "uri" }
+        }
+      },
+      "Incident": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "country_iso": { "type": "string", "pattern": "^[A-Z]{2}$" },
+          "city": { "type": "string" },
+          "lat": { "type": "number" },
+          "lng": { "type": "number" },
+          "occurred_at": { "type": "string", "format": "date-time" },
+          "source": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": ["terrorism", "crime", "civil_unrest", "natural_disaster", "transport_disruption", "health", "other"]
+          },
+          "severity": { "type": "integer", "minimum": 1, "maximum": 5 }
+        }
+      },
+      "ApiError": {
+        "type": "object",
+        "required": ["error", "message"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "invalid_iso"
+          },
+          "message": {
+            "type": "string",
+            "example": "ISO must be 2-letter alpha-2 (e.g. \"TH\", \"GB\"). Pass uppercase."
+          }
+        }
+      }
+    }
+  }
+}
