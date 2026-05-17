@@ -1,0 +1,450 @@
+{
+  "item": [
+    {
+      "id": "7e4db276-b3a4-4dd2-8158-abc5b36a0f60",
+      "name": "countries",
+      "item": [
+        {
+          "id": "235e6636-1a80-4006-8e32-454d8db27f52",
+          "name": "List all 180 countries",
+          "request": {
+            "name": "List all 180 countries",
+            "description": {
+              "content": "Returns a compact list of every country in the Warnely dataset with risk score, tier, region, and flag. Optionally filter by region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "countries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>",
+                  "description": "Filter countries by region. Case-insensitive."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b9f70b3-c5b0-48aa-9d39-d8d7d05e1e49",
+              "name": "List of countries (alphabetical by name).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "countries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "region",
+                      "value": "Asia"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 180,\n  \"countries\": [\n    {\n      \"iso2\": \"TH\",\n      \"name\": \"Thailand\",\n      \"iso3\": \"THA\",\n      \"region\": \"Asia\",\n      \"risk_score\": 38,\n      \"risk_tier\": \"Exercise Increased Caution\",\n      \"flag\": \"🇹🇭\"\n    },\n    {\n      \"iso2\": \"TH\",\n      \"name\": \"Thailand\",\n      \"iso3\": \"THA\",\n      \"region\": \"Asia\",\n      \"risk_score\": 38,\n      \"risk_tier\": \"Exercise Increased Caution\",\n      \"flag\": \"🇹🇭\"\n    }\n  ],\n  \"licence\": \"CC BY 4.0\",\n  \"attribution\": \"Warnely\",\n  \"methodology\": \"https://warnely.com/guides/methodology\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0058412f-9965-46b8-b36a-77c724728c6f",
+          "name": "Get full snapshot for one country",
+          "request": {
+            "name": "Get full snapshot for one country",
+            "description": {
+              "content": "Returns the full Warnely country record: composite score with component breakdown, government advisories, drug-law tier, LGBTQ+ legal and social status, women's-safety rating, Global Peace Index rank, and quick facts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "countries",
+                ":iso"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "iso",
+                  "description": "(Required) ISO 3166-1 alpha-2 country code (uppercase, two letters)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "89b9cba0-1df5-45b2-a250-e6d4888ac3e1",
+              "name": "Full country snapshot.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "countries",
+                    ":iso"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "iso",
+                      "description": "(Required) ISO 3166-1 alpha-2 country code (uppercase, two letters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"country\": {\n    \"iso2\": \"TH\",\n    \"name\": \"Thailand\",\n    \"iso3\": \"THA\",\n    \"region\": \"Asia\",\n    \"risk_score\": 38,\n    \"risk_tier\": \"Exercise Increased Caution\",\n    \"flag\": \"🇹🇭\",\n    \"summary\": \"string\",\n    \"breakdown\": {},\n    \"advisories\": {},\n    \"drug_law\": {},\n    \"lgbtq\": {},\n    \"womens_safety\": {},\n    \"peace_index\": {},\n    \"quick_facts\": {}\n  },\n  \"licence\": \"CC BY 4.0\",\n  \"attribution\": \"Warnely\",\n  \"methodology\": \"http://fRwFiSFULm.yuGGhKZGGZHS4enVtIt3Z9rPDZXXkrqZMTIWT96wuu\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8564f8e0-c33e-45fd-9a98-ba5538b33ea7",
+              "name": "Invalid ISO format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "countries",
+                    ":iso"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "iso",
+                      "description": "(Required) ISO 3166-1 alpha-2 country code (uppercase, two letters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_iso\",\n  \"message\": \"ISO must be 2-letter alpha-2 (e.g. \\\"TH\\\", \\\"GB\\\"). Pass uppercase.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5056f515-a31b-45fd-821d-e760f60bdc1b",
+              "name": "Country not found in the Warnely dataset.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "countries",
+                    ":iso"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "iso",
+                      "description": "(Required) ISO 3166-1 alpha-2 country code (uppercase, two letters)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"invalid_iso\",\n  \"message\": \"ISO must be 2-letter alpha-2 (e.g. \\\"TH\\\", \\\"GB\\\"). Pass uppercase.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8c9dc2fd-0817-4416-8a2a-a7606d74a074",
+      "name": "Composite formula and sources",
+      "request": {
+        "name": "Composite formula and sources",
+        "description": {
+          "content": "Returns the full Warnely methodology: composite formula, component weights, source list, tier boundaries, and review cadence.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "methodology"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "f4c25eaf-6ae2-41af-846a-19d53baae260",
+          "name": "Methodology document.",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "methodology"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"composite\": {\n    \"formula\": \"0.50 * editorial + 0.30 * authority + 0.15 * structural + 0.05 * live\",\n    \"renormalised_when_missing\": false,\n    \"scale\": \"0-100 (lower is safer)\"\n  },\n  \"components\": {\n    \"key_0\": {\n      \"weight\": 71.05167156738035,\n      \"description\": \"string\"\n    },\n    \"key_1\": {\n      \"weight\": 2456.786850466056,\n      \"description\": \"string\"\n    }\n  },\n  \"tiers\": [\n    {\n      \"range\": \"string\",\n      \"label\": \"string\",\n      \"level\": 8701\n    },\n    {\n      \"range\": \"string\",\n      \"label\": \"string\",\n      \"level\": 4064\n    }\n  ],\n  \"sources\": [\n    \"string\",\n    \"string\"\n  ],\n  \"licence\": \"string\",\n  \"review_cadence\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"attribution\": \"string\",\n  \"docs\": \"http://VmfsrCgmfvbqSPAFYoOUCgkpDVFdEiWU.rmgpEEv4l+iFs--ElO1j4G6gntZFMRa3vjszpSSJ0AKPiFefRRJL3lE6FAkSsNy\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "d852fb0b-3df1-4dd8-83f0-5ef25e31865d",
+      "name": "List recent incidents from the Warnely wire",
+      "request": {
+        "name": "List recent incidents from the Warnely wire",
+        "description": {
+          "content": "Returns the most recent items from the live safety-incident wire. Sources include Reuters, BBC, AP, AFP, USGS, GDACS, ReliefWeb, Met Office, EA Floods, and several regional news feeds. Each incident is classified by a GPT-4o-mini pipeline.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "incidents",
+            "recent"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "limit",
+              "value": "50",
+              "description": "Maximum number of incidents to return."
+            },
+            {
+              "disabled": false,
+              "key": "country",
+              "value": "<string>",
+              "description": "Filter by country (ISO 3166-1 alpha-2 code)."
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "aa4dfbd3-6d38-414b-90c2-d5c768b4f5a6",
+          "name": "List of recent incidents (newest first).",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "incidents",
+                "recent"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "key": "country",
+                  "value": "TH"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"incidents\": [\n    {\n      \"id\": \"c1351e44-d1e3-7e0f-8d69-6e248c6f2931\",\n      \"title\": \"string\",\n      \"summary\": \"string\",\n      \"url\": \"https://slU.fbdtFOzT1IVJK5iovJqR+l3j750pKYEhxkQg3nEbV\",\n      \"country_iso\": \"KN\",\n      \"city\": \"string\",\n      \"lat\": 9372.233234215902,\n      \"lng\": 2991.171779052859,\n      \"occurred_at\": \"2019-09-30T20:44:30.672Z\",\n      \"source\": \"string\",\n      \"category\": \"other\",\n      \"severity\": 4\n    },\n    {\n      \"id\": \"7ace9e56-2bfc-43bb-1dde-f24e84a9efa9\",\n      \"title\": \"string\",\n      \"summary\": \"string\",\n      \"url\": \"http://qptGdXNHG.hhCRWnvIiKAFexx0DEZ.AmsalhS9F67jIWJ+ppR9zqZpc\",\n      \"country_iso\": \"TM\",\n      \"city\": \"string\",\n      \"lat\": 2835.674996443435,\n      \"lng\": 7866.931813396405,\n      \"occurred_at\": \"1986-01-02T07:28:12.408Z\",\n      \"source\": \"string\",\n      \"category\": \"terrorism\",\n      \"severity\": 2\n    }\n  ]\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://warnely.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "10f1df21-e561-42db-93e9-ab3579cdba62",
+    "name": "Warnely Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Warnely publishes a composite country-risk score for 180 countries, derived from UK FCDO advisories, US State Department advisories, the Global Peace Index, the World Bank Worldwide Governance Indicators, WHO country health profiles, and a live news-incident wire (Reuters, BBC, AP, AFP, USGS, GDACS, ReliefWeb).\n\nThe public API exposes a stable subset of that dataset under `/v1`. CORS is open (`*`), authentication is not required, and the contract is versioned via the URL path — breaking changes ship behind `/v2`.\n\nUse cases:\n  - Embed country safety scores in travel apps, blogs, or notebooks.\n  - Compare countries side-by-side from a serverless function.\n  - Pipe the live incident wire into operations dashboards.\n\nLicence: CC BY 4.0 with attribution to Warnely.\n\nContact Support:\n Name: Warnely\n Email: hello@warnely.com",
+      "type": "text/plain"
+    }
+  }
+}

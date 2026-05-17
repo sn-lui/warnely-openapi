@@ -33,9 +33,15 @@ curl -s "https://warnely.com/api/v1/countries/TH" | head
 
 # Generate a TypeScript client
 npx openapi-typescript "https://warnely.com/openapi.json" -o ./src/warnely-api.d.ts
+```
 
-# Import into Postman
-# File → Import → Link → paste https://warnely.com/openapi.json
+**Interactive docs in the browser:** [warnely.com/api-docs](https://warnely.com/api-docs) (Swagger UI, no signup needed).
+
+**Postman:** import either way — `postman-collection.json` from this repo, or paste `https://warnely.com/openapi.json` into Postman's Import → Link dialog. Pre-generated collection is checked in here so you don't need to re-convert each time the live spec changes:
+
+```sh
+# Download the Postman collection
+curl -s "https://raw.githubusercontent.com/sn-lui/warnely-openapi/main/postman-collection.json" > warnely.postman_collection.json
 ```
 
 ## Terms
